@@ -13,8 +13,6 @@ by the following screenshot.
 
 ![Grafana with 2 devices](./grafana2devices.png)
 
-## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Fork specific changes
 - pom.xml is adapted to generate a Java 1.8 compliant jar. This can be useful to run the scraper on an older [Raspberry Pi](https://www.raspberrypi.com/).
