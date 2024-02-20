@@ -3,7 +3,8 @@
   <groupId>de.nmarion.weathercloud</groupId>
   <artifactId>WeathercloudScraper</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.1</version>
+  
 
   <dependencies>
     <dependency>
@@ -56,7 +57,9 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <release>15</release>
+          <!--release>11</release-->
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>

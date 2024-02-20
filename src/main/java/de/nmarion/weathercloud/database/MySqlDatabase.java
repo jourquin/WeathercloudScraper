@@ -22,8 +22,8 @@ public class MySqlDatabase implements Database {
 
         try (final Connection connection = dataSource.getConnection()) {
             try (final PreparedStatement preparedStatement = connection.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS `Weather` ( `Timestamp` TIMESTAMP NOT NULL , `Device` BIGINT NOT NULL , `Temperature` FLOAT NOT NULL , `Humidty` INT NOT NULL , `Bar` FLOAT NOT NULL , `Dew` FLOAT NOT NULL , `Windchill` FLOAT NOT NULL , `Rain` FLOAT NOT NULL , `Windspeed` FLOAT NOT NULL , `Winddirection` INT NOT NULL , `Gust` FLOAT NOT NULL )")) {
-                preparedStatement.executeUpdate();
+            		"CREATE TABLE IF NOT EXISTS `Weather` ( `Timestamp` TIMESTAMP NOT NULL , `Device` BIGINT NOT NULL , `Temperature` FLOAT NOT NULL , `Humidty` INT NOT NULL , `Bar` FLOAT NOT NULL , `Dew` FLOAT NOT NULL , `Windchill` FLOAT NOT NULL , `Rain` FLOAT NOT NULL , `Windspeed` FLOAT NOT NULL , `Winddirection` INT NOT NULL , `Gust` FLOAT NOT NULL, KEY `ndx` (`Timestamp`, `Device`))")) {
+            	preparedStatement.executeUpdate();
             }
         } catch (final SQLException ex) {
             ex.printStackTrace();
