@@ -2134,23 +2134,23 @@
         "uid": "${DS_MYSQL}"
       },
       "gridPos": {
-        "h": 16,
-        "w": 5,
+        "h": 13,
+        "w": 7,
         "x": 0,
         "y": 30
       },
       "id": 25,
       "options": {
         "cardinalLabels": "ordinal",
-        "colorPalette": "default",
+        "colorPalette": "operato",
         "doesLegendOverlay": false,
         "legendAnchor": "center",
         "legendPosition": "right",
-        "petalsPer90Deg": 4,
+        "petalsPer90Deg": 2,
         "showLegend": true,
         "speedBucketsCount": 8,
         "speedBucketsSize": 2,
-        "speedBucketsSizeAuto": false,
+        "speedBucketsSizeAuto": true,
         "tooltipDecimalPlaces": 1,
         "windSpeedUnit": "kmh",
         "windroseLabels": "compass"
@@ -2165,7 +2165,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \n    Windspeed*3.6 AS wind_speed, \n    Winddirection AS wind_direction\nFROM Weather WHERE Device = 3914926509 and  $__timeFilter(Timestamp)",
+          "rawSql": "SELECT \n    ROUND(Windspeed*3.6, 0) AS wind_speed, \n    Winddirection AS wind_direction\nFROM Weather WHERE Device = 3914926509 and  $__timeFilter(Timestamp)",
           "refId": "A",
           "sql": {
             "columns": [
@@ -2187,7 +2187,7 @@
           "table": "Weather"
         }
       ],
-      "title": "Wind in Boutaresse",
+      "title": "Winds in Boutaresse",
       "type": "operato-windrose-panel"
     },
     {
@@ -2196,23 +2196,23 @@
         "uid": "${DS_MYSQL}"
       },
       "gridPos": {
-        "h": 16,
-        "w": 5,
-        "x": 5,
+        "h": 13,
+        "w": 7,
+        "x": 7,
         "y": 30
       },
       "id": 26,
       "options": {
         "cardinalLabels": "ordinal",
-        "colorPalette": "default",
+        "colorPalette": "operato",
         "doesLegendOverlay": false,
         "legendAnchor": "center",
         "legendPosition": "right",
-        "petalsPer90Deg": 4,
+        "petalsPer90Deg": 2,
         "showLegend": true,
         "speedBucketsCount": 8,
         "speedBucketsSize": 2,
-        "speedBucketsSizeAuto": false,
+        "speedBucketsSizeAuto": true,
         "tooltipDecimalPlaces": 1,
         "windSpeedUnit": "kmh",
         "windroseLabels": "compass"
@@ -2227,7 +2227,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \n    Windspeed*3.6 AS wind_speed, \n    Winddirection AS wind_direction\nFROM Weather WHERE Device = 8148852804 and  $__timeFilter(Timestamp)",
+          "rawSql": "SELECT \n    ROUND(Windspeed*3.6, 0) AS wind_speed, \n    Winddirection AS wind_direction\nFROM Weather WHERE Device = 8148852804 and  $__timeFilter(Timestamp)",
           "refId": "A",
           "sql": {
             "columns": [
@@ -2249,7 +2249,7 @@
           "table": "Weather"
         }
       ],
-      "title": "Wind in Guignies",
+      "title": "Winds in Guignies",
       "type": "operato-windrose-panel"
     }
   ],
@@ -2271,6 +2271,6 @@
   "timezone": "",
   "title": "Weathercloud",
   "uid": "U-vi4LxMk",
-  "version": 45,
+  "version": 48,
   "weekStart": ""
 }
