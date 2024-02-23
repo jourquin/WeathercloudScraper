@@ -80,7 +80,7 @@ public class Weathercloud {
     	
     	// Avoid running multiple instances
     	String userHome = System.getProperty("user.home");
-    	lockFfile = new File(userHome, "WeatherCloudScraper.lock");
+    	lockFfile = new File(userHome, "WeathercloudScraper.lock");
     	try {
     	    FileChannel fc = FileChannel.open(lockFfile.toPath(),
     	            StandardOpenOption.CREATE,
