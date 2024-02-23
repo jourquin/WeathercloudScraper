@@ -25,6 +25,7 @@ It also illustrates the use of the [Operato Windrose](https://grafana.com/grafan
 
 ### Version 1.1.1
 - Force commit insertions when database is not in "autocommit" mode.
+- Delete lock file on exit.
 
 ## Compilation
 You need a Java JDK (at least version 1.8) and Maven. Run:

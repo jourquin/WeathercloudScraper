@@ -22,7 +22,9 @@ public class Weathercloud {
     private final Database database;
     private final List<String> deviceIds;
     
-    static File lockFfile;
+    static File lockFile;
+    static String lockFileName = "WeathercloudScraper.lock";
+    static boolean isRunning = false;
 
     public Weathercloud() {
         final long startTime = System.currentTimeMillis();
@@ -47,6 +49,7 @@ public class Weathercloud {
             try {
                 timer.cancel();
                 database.close();
+                lockFile.deleteOnExit();
             } catch (final Exception e) {
                 e.printStackTrace();
             }
@@ -80,14 +83,14 @@ public class Weathercloud {
     	
     	// Avoid running multiple instances
     	String userHome = System.getProperty("user.home");
-    	lockFfile = new File(userHome, "WeathercloudScraper.lock");
+    	lockFile = new File(userHome, lockFileName);
     	try {
-    	    FileChannel fc = FileChannel.open(lockFfile.toPath(),
+    	    FileChannel fc = FileChannel.open(lockFile.toPath(),
     	            StandardOpenOption.CREATE,
     	            StandardOpenOption.WRITE);
     	    FileLock lock = fc.tryLock();
     	    if (lock == null) {
-    	        System.out.println("another instance is running");
+    	        System.out.println("Another instance is already running");
     	        System.exit(0);
     	    }
     	} catch (IOException e) {
@@ -98,6 +101,6 @@ public class Weathercloud {
             Sentry.init();
         }
         new Weathercloud();
-    }
-   
+    }   
+ 
 }
