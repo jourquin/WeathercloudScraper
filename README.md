@@ -15,13 +15,15 @@ by the following screenshot.
 
 
 ## Fork specific changes
+### Version 1.1
 - pom.xml is adapted to generate a Java 1.8 compliant jar. This can be useful to run the scraper on an older [Raspberry Pi](https://www.raspberrypi.com/).
 - The main() method now tests if another instance of the scraper is already running (avoid multiple instances).
 - An index is added to the "Weather" MySQL table to improve query speed when many records are stored.
 - A second Grafana JSON file is provided to illustrate a case displaying two devices. 
 It also illustrates the use of the [Operato Windrose](https://grafana.com/grafana/plugins/operato-windrose-panel/) plugin for Grafana.
 - This README.md file contains more explanations than the original one.
-
+### Version 1.1.1
+- Force commit insertions when database is not in "autocommit" mode.
 
 ## Compilation
 You need a Java JDK (at least version 1.8) and Maven. Run:

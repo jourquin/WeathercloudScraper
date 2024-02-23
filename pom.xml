@@ -3,7 +3,7 @@
   <groupId>de.nmarion.weathercloud</groupId>
   <artifactId>WeathercloudScraper</artifactId>
   <packaging>jar</packaging>
-  <version>1.1</version>
+  <version>1.1.1</version>
   
 
   <dependencies>
