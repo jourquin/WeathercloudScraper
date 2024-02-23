@@ -22,6 +22,7 @@ by the following screenshot.
 - A second Grafana JSON file is provided to illustrate a case displaying two devices. 
 It also illustrates the use of the [Operato Windrose](https://grafana.com/grafana/plugins/operato-windrose-panel/) plugin for Grafana.
 - This README.md file contains more explanations than the original one.
+
 ### Version 1.1.1
 - Force commit insertions when database is not in "autocommit" mode.
 
