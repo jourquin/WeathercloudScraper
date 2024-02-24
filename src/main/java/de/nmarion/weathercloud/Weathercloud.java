@@ -15,91 +15,100 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
+
+	public void uncaughtException(Thread t, Throwable e) {
+		System.err.println("Something went wrong.");
+		System.out.println(e.getMessage());
+	}
+}
+
 public class Weathercloud {
 
-    private static final Logger logger = LoggerFactory.getLogger(Weathercloud.class);
+	private static final Logger logger = LoggerFactory.getLogger(Weathercloud.class);
 
-    private final Database database;
-    private final List<String> deviceIds;
-    
-    static File lockFile;
-    static String lockFileName = "WeathercloudScraper.lock";
+	private final Database database;
+	private final List<String> deviceIds;
 
-    public Weathercloud() {
-        final long startTime = System.currentTimeMillis();
-        logger.info("Starting WeathercloudScraper");
+	static File lockFile;
+	static String lockFileName = "WeathercloudScraper.lock";
 
-        if (Configuration.DEVICES == null) {
-            throw new RuntimeException("Enviroment variable DEVICES is missing!");
-        }
-        deviceIds = Arrays.asList(Configuration.DEVICES.split(" "));
+	public Weathercloud() {
+		final long startTime = System.currentTimeMillis();
+		logger.info("Starting WeathercloudScraper");
 
-        database = new MySqlDatabase(Configuration.DATABASE_HOST, Configuration.DATABASE_USER,
-                Configuration.DATABASE_PASSWORD,
-                Configuration.DATABASE_NAME == null ? "WeathercloudScraper" : Configuration.DATABASE_NAME,
-                Configuration.DATABASE_PORT == null ? 3306 : Integer.valueOf(Configuration.DATABASE_PORT));
-        logger.info("Database-Connection set up!");
+		if (Configuration.DEVICES == null) {
+			throw new RuntimeException("Enviroment variable DEVICES is missing!");
+		}
+		deviceIds = Arrays.asList(Configuration.DEVICES.split(" "));
 
-        final Timer timer = new Timer("Scrape Timer");
-        timer.schedule(new WeathercloudScraper(this), 100, TimeUnit.MINUTES.toMillis(10));
-        logger.info("Timer Task started");
+		database = new MySqlDatabase(Configuration.DATABASE_HOST, Configuration.DATABASE_USER,
+				Configuration.DATABASE_PASSWORD,
+				Configuration.DATABASE_NAME == null ? "WeathercloudScraper" : Configuration.DATABASE_NAME,
+				Configuration.DATABASE_PORT == null ? 3306 : Integer.valueOf(Configuration.DATABASE_PORT));
+		logger.info("Database-Connection set up!");
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try {
-                timer.cancel();
-                database.close();
-                lockFile.deleteOnExit();
-            } catch (final Exception e) {
-                e.printStackTrace();
-            }
-        }));
+		final Timer timer = new Timer("Scrape Timer");
+		timer.schedule(new WeathercloudScraper(this), 100, TimeUnit.MINUTES.toMillis(10));
+		logger.info("Timer Task started");
 
-        logger.info(String.format("Startup finished in %dms!", System.currentTimeMillis() - startTime));
-    }
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			try {
+				timer.cancel();
+				database.close();
+				lockFile.deleteOnExit();
+			} catch (final Exception e) {
+				e.printStackTrace();
+			}
+		}));
 
-     /**
-     * @return the database
-     */
-    public Database getDatabase() {
-        return database;
-    }
+		logger.info(String.format("Startup finished in %dms!", System.currentTimeMillis() - startTime));
+	}
 
-    /**
-     * @return the deviceIds
-     */
-    public List<String> getDeviceIds() {
-        return deviceIds;
-    }
+	/**
+	 * @return the database
+	 */
+	public Database getDatabase() {
+		return database;
+	}
 
-    /**
-     * @return the logger
-     */
-    public Logger getLogger() {
-        return logger;
-    }
+	/**
+	 * @return the deviceIds
+	 */
+	public List<String> getDeviceIds() {
+		return deviceIds;
+	}
 
-    public static void main(String... args) {
-    	
-    	// Avoid running multiple instances
-    	String userHome = System.getProperty("user.home");
-    	lockFile = new File(userHome, lockFileName);
-    	try {
-    	    FileChannel fc = FileChannel.open(lockFile.toPath(),
-    	            StandardOpenOption.CREATE,
-    	            StandardOpenOption.WRITE);
-    	    FileLock lock = fc.tryLock();
-    	    if (lock == null) {
-    	        System.out.println("Another instance is already running");
-    	        System.exit(0);
-    	    }
-    	} catch (IOException e) {
-    	    throw new Error(e);
-    	}
-    	
-        if (System.getenv("SENTRY_DSN") != null || System.getProperty("sentry.properties") != null) {
-            Sentry.init();
-        }
-        new Weathercloud();
-    }   
- 
+	/**
+	 * @return the logger
+	 */
+	public Logger getLogger() {
+		return logger;
+	}
+
+	public static void main(String... args) {
+
+		// Avoid running multiple instances
+		String userHome = System.getProperty("user.home");
+		lockFile = new File(userHome, lockFileName);
+		try {
+			FileChannel fc = FileChannel.open(lockFile.toPath(), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+			FileLock lock = fc.tryLock();
+			if (lock == null) {
+				System.out.println("Another instance is already running");
+				System.exit(0);
+			}
+		} catch (IOException e) {
+			throw new Error(e);
+		}
+
+		if (System.getenv("SENTRY_DSN") != null || System.getProperty("sentry.properties") != null) {
+			Sentry.init();
+		}
+
+		Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
+
+		new Weathercloud();
+	}
+
 }

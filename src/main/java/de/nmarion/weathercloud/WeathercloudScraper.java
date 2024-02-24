@@ -54,7 +54,7 @@ public class WeathercloudScraper extends TimerTask{
         okHttpClient.newCall(request).enqueue(new Callback() {
 
             public void onFailure(Call call, IOException exception) {
-            	System.err.println("Failed to fetch data from Weathercloud");
+            	weathercloud.getLogger().info("Failed to fetch data from Weathercloud");
                 future.completeExceptionally(exception);
             }
 
