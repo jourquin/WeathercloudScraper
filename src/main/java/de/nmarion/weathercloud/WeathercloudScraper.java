@@ -49,9 +49,12 @@ public class WeathercloudScraper extends TimerTask{
         final CompletableFuture<WeatherData> future = new CompletableFuture<WeatherData>();
         final Request request = new Request.Builder().url("https://app.weathercloud.net/device/values?code=" + deviceId)
                 .header("X-Requested-With", "XMLHttpRequest").build();
+        weathercloud.getLogger().info("Request data for device " + deviceId);
+        
         okHttpClient.newCall(request).enqueue(new Callback() {
 
             public void onFailure(Call call, IOException exception) {
+            	System.err.println("Failed to fetch data from Weathercloud");
                 future.completeExceptionally(exception);
             }
 
