@@ -42,7 +42,6 @@ public class WeathercloudScraper extends TimerTask{
                 weathercloud.getLogger().info("Inserted data for device " + device);
             });
         }
-        weathercloud.getDatabase().commit();
     }
 
     private CompletableFuture<WeatherData> loadCurrentData(long deviceId) {
