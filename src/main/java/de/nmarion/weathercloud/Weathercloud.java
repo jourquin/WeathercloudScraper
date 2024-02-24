@@ -24,7 +24,6 @@ public class Weathercloud {
     
     static File lockFile;
     static String lockFileName = "WeathercloudScraper.lock";
-    static boolean isRunning = false;
 
     public Weathercloud() {
         final long startTime = System.currentTimeMillis();
