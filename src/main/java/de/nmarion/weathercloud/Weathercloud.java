@@ -15,14 +15,6 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
-
-	public void uncaughtException(Thread t, Throwable e) {
-		System.err.println("Something went wrong.");
-		System.out.println(e.getMessage());
-	}
-}
-
 public class Weathercloud {
 
 	private static final Logger logger = LoggerFactory.getLogger(Weathercloud.class);
@@ -105,8 +97,6 @@ public class Weathercloud {
 		if (System.getenv("SENTRY_DSN") != null || System.getProperty("sentry.properties") != null) {
 			Sentry.init();
 		}
-
-		Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
 
 		new Weathercloud();
 	}

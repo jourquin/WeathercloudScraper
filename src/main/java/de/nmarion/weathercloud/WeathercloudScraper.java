@@ -42,6 +42,7 @@ public class WeathercloudScraper extends TimerTask{
                 weathercloud.getLogger().info("Inserted data for device " + device);
             });
         }
+        weathercloud.getLogger().info("Memory usage: " +(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()));
     }
 
     private CompletableFuture<WeatherData> loadCurrentData(long deviceId) {
