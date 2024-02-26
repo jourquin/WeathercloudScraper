@@ -43,7 +43,6 @@ public class WeathercloudScraper extends TimerTask{
             });
         }
         System.gc();
-        weathercloud.getLogger().info("Memory usage: " +(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()));
     }
 
     private CompletableFuture<WeatherData> loadCurrentData(long deviceId) {

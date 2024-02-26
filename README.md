@@ -27,6 +27,10 @@ It also illustrates the use of the [Operato Windrose](https://grafana.com/grafan
 - Force commit insertions when database is not in "autocommit" mode.
 - Delete lock file on exit.
 
+### Version 1.1.2
+- Close database connection after insertion to avoid connections pool timeout (Bug fix).
+- Force GC after each cycle to minimize memory footprint.
+
 ## Compilation
 You need a Java JDK (at least version 1.8) and Maven. Run:
 
